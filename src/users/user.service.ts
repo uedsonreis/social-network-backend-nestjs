@@ -14,7 +14,10 @@ export class UserService {
                 projectId: process.env.PROJECT_ID,
                 privateKey: process.env.PRIVATE_KEY,
                 clientEmail: process.env.CLIENT_EMAIL,
-            })
+            }),
+            projectId: process.env.PROJECT_ID,
+            storageBucket: process.env.STORAGE_BUCKET,
+            serviceAccountId: process.env.SERVICE_ACCOUNT_ID,
         })
     }
 
