@@ -12,7 +12,6 @@ let port = Number(process.env.DB_PORT)
 let username = process.env.USERNAME
 let password = process.env.PASSWORD
 let database = process.env.DATABASE
-let dialect: any = process.env.DIALECT
 
 if (process.env.NODE_ENV === 'test') {
     host = process.env.HOST_TEST
@@ -20,12 +19,11 @@ if (process.env.NODE_ENV === 'test') {
     database = process.env.DATABASE_TEST
     username = process.env.USERNAME_TEST
     password = process.env.PASSWORD_TEST
-    dialect = process.env.DIALECT_TEST
 }
 
 export const config: SequelizeModuleOptions = {
-    host, port, dialect,
-    username, password, database,
+    host, port, username, password, database,
+    dialect: 'postgres',
     logging: console.log,
     models: [ ...entities ],
     pool: { max: 5, acquire: 300000 },
