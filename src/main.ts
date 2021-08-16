@@ -10,7 +10,7 @@ async function bootstrap() {
 
     setupDocumentation(app)
 
-    await app.listen(process.env.SERVICE_PORT)
+    await app.listen(process.env.PORT)
 }
 
 bootstrap()
