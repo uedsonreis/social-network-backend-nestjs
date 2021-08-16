@@ -1,0 +1,16 @@
+{
+    "development": {
+        "host": "ec2-3-218-149-60.compute-1.amazonaws.com",
+        "username": "nhrqolavcmvipa",
+        "password": "3bd405cb5319fb35151b5506b148f827da28042d1ac17811f9efe606078c1dc7",
+        "database": "da0ljeca0vuneo",
+        "dialect": "postgres",
+        "port": 5432,
+        "dialectOptions": {
+            "ssl": {
+                "require": true,
+                "rejectUnauthorized": false
+            }
+        }
+    }
+}
