@@ -8,6 +8,7 @@ import { User } from 'src/users/user.entity'
 export class JwtStrategy extends PassportStrategy(Strategy) {
 
     constructor() {
+        console.log('Strategy:', process.env.SECRET_KEY)
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.SECRET_KEY,
