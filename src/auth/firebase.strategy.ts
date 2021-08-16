@@ -1,25 +1,25 @@
-import { ExtractJwt, Strategy } from 'passport-jwt'
+import { FirebaseAuthStrategy, FirebaseUser } from '@tfarras/nestjs-firebase-auth'
 import { PassportStrategy } from '@nestjs/passport'
 import { Injectable } from '@nestjs/common'
+import { ExtractJwt } from 'passport-jwt'
 
 import { User } from 'src/users/user.entity'
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class FirebaseStrategy extends PassportStrategy(FirebaseAuthStrategy, 'firebase') {
 
     constructor() {
-        console.log('Strategy:', process.env.SECRET_KEY)
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: process.env.SECRET_KEY,
+            extractor: ExtractJwt.fromAuthHeaderAsBearerToken()
         })
     }
 
-    validate(payload: any) {
+    public async validate(payload: FirebaseUser) {
         return {
             id: payload.user_id,
             name: payload.name,
             email: payload.email
         } as User
     }
+
 }

@@ -1143,6 +1143,11 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@tfarras/nestjs-firebase-auth@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@tfarras/nestjs-firebase-auth/-/nestjs-firebase-auth-2.0.0.tgz#4599a1444ab71b11beb3122c9cf11ddca06b8857"
+  integrity sha512-uZB/e/STnhSf1lrtJWkq3ORx1thZlRa9aNNtb/vRMHweV6EocvShuhvaJTJVEPhtvqGul2HiokwnOhoTgXaacA==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

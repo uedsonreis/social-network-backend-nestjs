@@ -29,7 +29,7 @@ describe('PostController', () => {
     describe('POST', () => {
         it('should create and return the created post', async () => {
             
-            const created = await controller.store(post)
+            const created = await controller.store({ user: { email: 'uedsonreis@gmail.com' } }, post)
             expect(Number(created.id)).toBeGreaterThan(0)
 
             post.id = created.id

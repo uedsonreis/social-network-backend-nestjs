@@ -29,6 +29,7 @@
         "@nestjs/platform-express": "^8.0.0",
         "@nestjs/sequelize": "^8.0.0",
         "@nestjs/swagger": "^5.0.9",
+        "@tfarras/nestjs-firebase-auth": "^2.0.0",
         "class-transformer": "^0.4.0",
         "class-validator": "^0.13.1",
         "firebase": "^8.9.1",
