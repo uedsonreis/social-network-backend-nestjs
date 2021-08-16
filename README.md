@@ -1,7 +1,7 @@
 ### Social Network
 
 Before you start, You need create a file named .env with the follow variables:
-- SERVICE_PORT=3000
+- SERVICE_PORT
 - API_KEY
 - AUTH_DOMAIN
 - PROJECT_ID

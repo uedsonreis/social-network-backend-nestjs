@@ -1,5 +1,5 @@
 
-import { Post as PostMethod, Body, Controller, Put, Param, Get, Query, Post, UseGuards } from "@nestjs/common"
+import { Post as PostMethod, Body, Controller, Put, Param, Get, Query, Post, UseGuards, Request, UsePipes, ValidationPipe } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport"
 import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiQuery, ApiTags } from "@nestjs/swagger"
 
@@ -46,6 +46,7 @@ export class PostController extends AbstractController<PostEntity> {
     }
 
     @PostMethod()
+    @UsePipes(new ValidationPipe({ transform: false }))
     @ApiBody({
         type: PostEntity,
         description: "The record to be created."
@@ -55,7 +56,8 @@ export class PostController extends AbstractController<PostEntity> {
         description: 'The created record.'
     })
     @UseGuards(AuthGuard('jwt'))
-    public async store(@Body() record: PostEntity) {
+    public async store(@Request() request: any, @Body() record: PostEntity) {
+        record.owner = request.user.email
         return await this.service.create(record)
     }
 
@@ -69,7 +71,8 @@ export class PostController extends AbstractController<PostEntity> {
         description: 'The updated record.'
     })
     @UseGuards(AuthGuard('jwt'))
-    public async update(@Param('id') id: number, @Body() record: PostEntity) {
+    public async update(@Request() request: any, @Param('id') id: number, @Body() record: PostEntity) {
+        record.owner = request.user.email
         return await this.service.update(id, record)
     }
 

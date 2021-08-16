@@ -1,5 +1,5 @@
 
-import { Post as PostMethod, Body, Controller, Put, Param, Get, Query, Post, UseGuards, Request } from "@nestjs/common"
+import { Post as PostMethod, Body, Controller, Put, Param, Get, Query, Post, UseGuards, Request, UsePipes, ValidationPipe } from "@nestjs/common"
 import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiQuery, ApiTags } from "@nestjs/swagger"
 
 import { UserService } from "./user.service"
@@ -13,22 +13,22 @@ export class UserController {
     constructor(private readonly service: UserService) {}
 
     @Get()
-    @ApiOkResponse({ type: User, description: 'User' })
     @UseGuards(AuthGuard('jwt'))
+    @ApiOkResponse({ type: User, description: 'User' })
     public async index(@Request() request: any) {
         return await this.service.getByEmail(request.user.email)
     }
 
-    @PostMethod('users')
+    @PostMethod()
+    @UsePipes(new ValidationPipe({ transform: false }))
     @ApiBody({
         type: User,
-        description: "The record to be created."
+        description: "The user data to be created."
     })
     @ApiCreatedResponse({
         type: User,
-        description: 'The created record.'
+        description: 'The created user.'
     })
-    @UseGuards(AuthGuard('jwt'))
     public async store(@Body() record: User) {
         return await this.service.create(record)
     }

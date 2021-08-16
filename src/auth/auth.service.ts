@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import { Login } from '../../users/user.entity'
+import { Login } from '../users/user.entity'
 
 @Injectable()
 export class AuthService {
@@ -22,8 +22,12 @@ export class AuthService {
     }
 
     public async signIn(login: Login): Promise<string | null> {
-        const credential = await this.firebaseApp.auth().signInWithEmailAndPassword(login.email, login.password)
-        return await credential.user.getIdToken()
+        try {
+            const credential = await this.firebaseApp.auth().signInWithEmailAndPassword(login.email, login.password)
+            return await credential.user.getIdToken()
+        } catch (error) {
+            throw new HttpException('Invalid login!', HttpStatus.UNAUTHORIZED)
+        }
     }
 
 }
