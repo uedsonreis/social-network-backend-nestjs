@@ -13,7 +13,7 @@ describe('PostController', () => {
     beforeAll(async () => {
         const testModule = await Test.createTestingModule({
             imports: [ AppModule ]
-        }).compile();
+        }).compile()
 
         controller = testModule.get<PostController>(PostController)
     })

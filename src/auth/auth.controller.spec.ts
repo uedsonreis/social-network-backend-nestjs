@@ -12,7 +12,7 @@ describe('AuthController', () => {
     beforeAll(async () => {
         const testModule = await Test.createTestingModule({
             imports: [ AppModule ]
-        }).compile();
+        }).compile()
 
         controller = testModule.get<AuthController>(AuthController)
     })

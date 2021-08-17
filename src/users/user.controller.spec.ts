@@ -11,7 +11,7 @@ describe('UserController', () => {
     beforeAll(async () => {
         const testModule = await Test.createTestingModule({
             imports: [ AppModule ]
-        }).compile();
+        }).compile()
 
         controller = testModule.get<UserController>(UserController)
     })
@@ -19,7 +19,6 @@ describe('UserController', () => {
     describe('GET', () => {
         it('should return the logged user', async () => {
             const user = { id: 1, email: 'uedsonreis@gmail.com' } as User
-
             const logged = await controller.index({ user })
             expect(Number(logged.id)).toBe(user.id)
         })
