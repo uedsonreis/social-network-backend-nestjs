@@ -2,7 +2,6 @@ import { Test } from '@nestjs/testing'
 
 import { AppModule } from '../app.module'
 import { PostController } from './post.controller'
-import { PostService } from './post.service'
 import Post from './post.entity'
 
 describe('PostController', () => {

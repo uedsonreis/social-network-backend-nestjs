@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common"
 import { ApiBody, ApiCreatedResponse, ApiTags } from "@nestjs/swagger"
 
-import { Login } from "../users/user.entity"
+import { Login } from "./login"
 import { AuthService } from "./auth.service"
 
 @ApiTags('Authorization')
