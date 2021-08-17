@@ -7,6 +7,7 @@ import User from "../users/user.entity"
 @Table({ modelName: 'posts' })
 export default class Post extends Model<Post> {
 
+    @ApiProperty()
     @Column({ primaryKey: true, autoIncrement: true })
     public id!: number
 
