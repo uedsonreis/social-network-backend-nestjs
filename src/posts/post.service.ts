@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize'
 import { Transaction } from 'sequelize/types'
 
 import { AbstractService } from '../api/abstract.service'
-import Post from '../repository/entities/post'
+import Post from './post.entity'
 
 @Injectable()
 export class PostService extends AbstractService<Post> {
@@ -15,7 +15,7 @@ export class PostService extends AbstractService<Post> {
     public async update(id: number, record: Post, transaction?: Transaction) {
         const postDB = await super.getById(id, undefined)
 
-        if (postDB && postDB.owner !== record.owner) {
+        if (postDB && postDB.ownerId !== record.ownerId) {
             throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
         }
         return await super.update(id, record, transaction)

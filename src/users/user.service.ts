@@ -1,40 +1,41 @@
-import { Injectable } from '@nestjs/common'
-import * as admin from 'firebase-admin'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/sequelize'
+import { Transaction } from 'sequelize/types'
+import * as bcrypt from 'bcryptjs'
 
-import { User } from './user.entity'
+import User from './user.entity'
 
 @Injectable()
 export class UserService {
 
-    private firebaseAdmin: admin.app.App
-
-    constructor() {
-        this.firebaseAdmin = admin.initializeApp({
-            credential: admin.credential.applicationDefault()
-        })
-    }
+    constructor(@InjectModel(User) private readonly repository: typeof User) {}
 
     public async getByEmail(email: string) {
-        const record = await this.firebaseAdmin.auth().getUserByEmail(email)
-        return this.getUser(record)
-    }
-
-    public async create(user: User) {
-        const record = await this.firebaseAdmin.auth().createUser({
-            email: user.email,
-            displayName: user.name,
-            password: user.password
+        let userDB = await this.repository.findOne({
+            where: { email }
         })
-        return this.getUser(record)
+
+        if (!userDB) return null
+
+        return userDB.toJSON() as User
     }
 
-    private getUser(record: admin.auth.UserRecord): User | null {
-        if (!record || record.disabled) return null
+    public async create(user: User, transaction?: Transaction) {
+        const userDB = await this.getByEmail(user.email)
+        if (userDB) {
+            throw new HttpException('There is another user registered with this E-mail.', HttpStatus.BAD_REQUEST)
+        }
+
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(user.password, salt)
+
+        let saved = await this.repository.create({ ...user, password: hash } as User, { transaction })
+        saved = saved.toJSON() as User
 
         return {
-            id: record.uid,
-            email: record.email,
-            name: record.displayName
+            id: saved.id,
+            name: saved.name,
+            email: saved.email
         } as User
     }
 

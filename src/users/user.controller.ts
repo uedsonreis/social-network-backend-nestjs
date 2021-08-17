@@ -1,10 +1,9 @@
-
-import { Post as PostMethod, Body, Controller, Put, Param, Get, Query, Post, UseGuards, Request, UsePipes, ValidationPipe } from "@nestjs/common"
-import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiQuery, ApiTags } from "@nestjs/swagger"
+import { AuthGuard } from "@nestjs/passport"
+import { Post as PostMethod, Body, Controller, Get, UseGuards, Request, UsePipes, ValidationPipe } from "@nestjs/common"
+import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger"
 
 import { UserService } from "./user.service"
-import { User } from "./user.entity"
-import { AuthGuard } from "@nestjs/passport"
+import User from "./user.entity"
 
 @ApiTags('User')
 @Controller('/users')
@@ -13,7 +12,7 @@ export class UserController {
     constructor(private readonly service: UserService) {}
 
     @Get()
-    @UseGuards(AuthGuard('firebase'))
+    @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: User, description: 'Logged user' })
     public async index(@Request() request: any) {
         return await this.service.getByEmail(request.user.email)

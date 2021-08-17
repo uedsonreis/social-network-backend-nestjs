@@ -3,12 +3,12 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 
 import { PostModule } from './posts/post.module'
-import { UserModule } from './users/user.module'
+import { RepositoryModule } from './repository/repository.module'
 
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
-        PostModule, UserModule, AuthModule
+        RepositoryModule, PostModule, AuthModule
     ],
     controllers: [],
     providers: [],

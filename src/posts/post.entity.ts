@@ -1,16 +1,14 @@
-import { Column, CreatedAt, Model, Table, UpdatedAt } from "sequelize-typescript"
+import { BelongsTo, Column, CreatedAt, ForeignKey, Model, Table, UpdatedAt } from "sequelize-typescript"
 import { ApiProperty } from "@nestjs/swagger"
 import { IsNotEmpty } from "class-validator"
+
+import User from "../users/user.entity"
 
 @Table({ modelName: 'posts' })
 export default class Post extends Model<Post> {
 
     @Column({ primaryKey: true, autoIncrement: true })
     public id!: number
-
-    @ApiProperty()
-    @Column
-    public valid: boolean = true
 
     @ApiProperty()
     @Column
@@ -36,8 +34,12 @@ export default class Post extends Model<Post> {
     @Column
     public location!: string
 
+    @ForeignKey(() => User)
+    @Column({ field: 'owner_id' })
+    public ownerId!: number
+
     @ApiProperty()
-    @Column
-    public owner!: string
+    @BelongsTo(() => User, 'ownerId')
+    public owner!: User
 
 }

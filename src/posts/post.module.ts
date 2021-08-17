@@ -3,12 +3,11 @@ import { SequelizeModule } from '@nestjs/sequelize'
 
 import { PostService } from './post.service'
 import { PostController } from './post.controller'
-import { config, entities } from '../repository'
+import { entities } from '../repository/repository.module'
 
 @Module({
     imports: [
-        SequelizeModule.forRoot(config),
-        SequelizeModule.forFeature([...entities]),
+        SequelizeModule.forFeature(entities)
     ],
     controllers: [ PostController ],
     providers: [ PostService ],

@@ -4,7 +4,7 @@ import { AuthGuard } from "@nestjs/passport"
 import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiQuery, ApiTags } from "@nestjs/swagger"
 
 import { AbstractController } from "../api/abstract.controller"
-import PostEntity from "../repository/entities/post"
+import PostEntity from "./post.entity"
 import { PostService } from "./post.service"
 
 @ApiTags('Post')
@@ -25,7 +25,7 @@ export class PostController extends AbstractController<PostEntity> {
         type: PostEntity,
         description: 'The record.'
     })
-    @UseGuards(AuthGuard('firebase'))
+    @UseGuards(AuthGuard('jwt'))
     public async get(@Param('id') id: number, @Query() query: any) {
         return await this.service.getById(id, query)
     }
@@ -40,7 +40,7 @@ export class PostController extends AbstractController<PostEntity> {
         type: [PostEntity],
         description: 'A record list.'
     })
-    @UseGuards(AuthGuard('firebase'))
+    @UseGuards(AuthGuard('jwt'))
     public async index(@Query() query: any) {
         return await this.service.getList(query)
     }
@@ -55,9 +55,9 @@ export class PostController extends AbstractController<PostEntity> {
         type: PostEntity,
         description: 'The created record.'
     })
-    @UseGuards(AuthGuard('firebase'))
+    @UseGuards(AuthGuard('jwt'))
     public async store(@Request() request: any, @Body() record: PostEntity) {
-        record.owner = request.user.email
+        record.ownerId = request.user.id
         return await this.service.create(record)
     }
 
@@ -70,9 +70,9 @@ export class PostController extends AbstractController<PostEntity> {
         type: PostEntity,
         description: 'The updated record.'
     })
-    @UseGuards(AuthGuard('firebase'))
+    @UseGuards(AuthGuard('jwt'))
     public async update(@Request() request: any, @Param('id') id: number, @Body() record: PostEntity) {
-        record.owner = request.user.email
+        record.ownerId = request.user.id
         return await this.service.update(id, record)
     }
 

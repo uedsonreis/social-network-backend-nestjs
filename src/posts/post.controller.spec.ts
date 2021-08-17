@@ -1,11 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing'
-import { Repository } from 'sequelize-typescript'
-import { SequelizeModule } from '@nestjs/sequelize'
+import { Test } from '@nestjs/testing'
 
+import { AppModule } from '../app.module'
 import { PostController } from './post.controller'
 import { PostService } from './post.service'
-import { config, entities } from '../repository'
-import Post from '../repository/entities/post'
+import Post from './post.entity'
 
 describe('PostController', () => {
 
@@ -15,12 +13,7 @@ describe('PostController', () => {
 
     beforeAll(async () => {
         const testModule = await Test.createTestingModule({
-            imports: [
-                SequelizeModule.forRoot(config),
-                SequelizeModule.forFeature([...entities]),
-            ],
-            controllers: [ PostController ],
-            providers: [ PostService ],
+            imports: [ AppModule ]
         }).compile();
 
         controller = testModule.get<PostController>(PostController)
@@ -29,7 +22,7 @@ describe('PostController', () => {
     describe('POST', () => {
         it('should create and return the created post', async () => {
             
-            const created = await controller.store({ user: { email: 'uedsonreis@gmail.com' } }, post)
+            const created = await controller.store({ user: { id: 1 } }, post)
             expect(Number(created.id)).toBeGreaterThan(0)
 
             post.id = created.id

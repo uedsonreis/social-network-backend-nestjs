@@ -8,9 +8,6 @@ module.exports = {
                 autoIncrement: true, primaryKey: true,
                 type: Sequelize.BIGINT, allowNull: false,
             },
-            valid: {
-                type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true
-            },
             createdAt: {
                 type: Sequelize.DATE, allowNull: false,
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -25,15 +22,18 @@ module.exports = {
             url_image: {
                 type: Sequelize.STRING, allowNull: false
             },
-            owner: {
-                type: Sequelize.STRING, allowNull: false
-            },
             description: {
                 type: Sequelize.STRING, allowNull: true
             },
             location: {
                 type: Sequelize.STRING, allowNull: true
-            }
+            },
+
+            owner_id: {
+                type: Sequelize.BIGINT, allowNull: false,
+                references: { model: 'users', key: 'id' },
+                onUpdate: 'CASCADE', onDelete: 'CASCADE',
+            },
         })
     },
 

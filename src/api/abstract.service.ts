@@ -14,8 +14,7 @@ export abstract class AbstractService<T extends Model<T>> {
     }
 
     public async getList(filters: any): Promise<T[]> {
-        if (!filters) filters = { valid: true }
-        if (filters.valid === undefined) filters = { ...filters, valid: true }
+        if (!filters) filters = {}
 
         const { include, searchByOr, orderBy, groupBy, limitBy, ...rest } = filters
         const filterWithOr = this.getFilterWithOr(searchByOr)
@@ -30,8 +29,7 @@ export abstract class AbstractService<T extends Model<T>> {
     }
 
     public async count(filters: any): Promise<number> {
-        if (!filters) filters = { valid: true }
-        if (filters.valid === undefined) filters = { ...filters, valid: true }
+        if (!filters) filters = {}
 
         const { searchByOr, ...rest } = filters
         const filterWithOr = this.getFilterWithOr(searchByOr)
@@ -40,8 +38,7 @@ export abstract class AbstractService<T extends Model<T>> {
     }
 
     public async sum(field: string, filters: any): Promise<number> {
-        if (!filters) filters = { valid: true }
-        if (filters.valid === undefined) filters = { ...filters, valid: true }
+        if (!filters) filters = {}
 
         const { searchByOr, ...rest } = filters
         const filterWithOr = this.getFilterWithOr(searchByOr)

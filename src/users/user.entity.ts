@@ -1,22 +1,28 @@
+import { Column, CreatedAt, Model, Table, UpdatedAt } from "sequelize-typescript"
 import { ApiProperty } from "@nestjs/swagger"
 import { IsNotEmpty } from "class-validator"
 
-export class User {
+@Table({ modelName: 'users', timestamps: false })
+export default class User extends Model<User> {
 
     @ApiProperty()
-    id?: string
-
-    @ApiProperty()
-    @IsNotEmpty()
-    name: string
-
-    @ApiProperty()
-    @IsNotEmpty()
-    email: string
+    @Column({ primaryKey: true, autoIncrement: true })
+    public id!: number
 
     @ApiProperty()
     @IsNotEmpty()
-    password?: string
+    @Column
+    public name!: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @Column
+    public email!: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @Column
+    public password?: string
 
 }
 
