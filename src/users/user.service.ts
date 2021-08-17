@@ -10,13 +10,7 @@ export class UserService {
 
     constructor() {
         this.firebaseAdmin = admin.initializeApp({
-            credential: admin.credential.cert({
-                projectId: process.env.PROJECT_ID,
-                privateKey: process.env.PRIVATE_KEY,
-                clientEmail: process.env.SERVICE_ACCOUNT_ID,
-            }),
-            projectId: process.env.PROJECT_ID,
-            serviceAccountId: process.env.SERVICE_ACCOUNT_ID,
+            credential: admin.credential.applicationDefault()
         })
     }
 

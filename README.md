@@ -1,7 +1,7 @@
 ### Social Network
 
 Before you start, You need create a file named .env with the follow variables:
-- SERVICE_PORT
+- PORT
 - API_KEY
 - AUTH_DOMAIN
 - PROJECT_ID
@@ -9,21 +9,18 @@ Before you start, You need create a file named .env with the follow variables:
 - MESSAGING_SENDER_ID
 - APP_ID
 - MEASUREMENT_ID
-- SECRET_KEY
 
 - HOST
 - DB_PORT
 - DATABASE
 - USERNAME
 - PASSWORD
-- DIALECT
 
 - HOST_TEST
 - DB_PORT_TEST
 - DATABASE_TEST
 - USERNAME_TEST
 - PASSWORD_TEST
-- DIALECT_TEST
 
 ## Description
 
