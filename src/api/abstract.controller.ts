@@ -24,24 +24,6 @@ export abstract class AbstractController<T extends Model<T>> {
         return await this.service.count(query)
     }
 
-    @Get('sum/:field')
-    @ApiParam({
-        name: 'field', description: 'The field name will be summed.'
-    })
-    @ApiQuery({
-        name: '', required: false,
-        example: "?name=John&age=38",
-        description: "Filters to the request (same type of the record)."
-    })
-    @ApiOkResponse({
-        type: Number,
-        description: 'A sum of the field.'
-    })
-    @UseGuards(AuthGuard('jwt'))
-    public async sum(@Param('field') field: string, @Query() query: any) {
-        return await this.service.sum(field, query)
-    }
-
     @Delete(':id')
     @ApiOkResponse({
         type: Boolean,
