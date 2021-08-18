@@ -10,11 +10,16 @@ export class UserService {
 
     constructor(@InjectModel(User) private readonly repository: typeof User) {}
 
-    public async getByEmail(email: string) {
-        let userDB = await this.repository.findOne({
-            where: { email }
-        })
+    public async get(id: number) {
+        const userDB = await this.repository.findByPk(id)
+        if (!userDB) return null
 
+        const { password, ...rest } = userDB.toJSON() as User
+        return rest as User
+    }
+
+    public async getByEmail(email: string) {
+        const userDB = await this.repository.findOne({ where: { email } })
         if (!userDB) return null
 
         return userDB.toJSON() as User

@@ -16,17 +16,18 @@ export class PostService extends AbstractService<Post> {
 
     public async getById(id: number, options: any): Promise<Post | null> {
         const postDB = await super.getById(id, { ...options, include })
-        return this.removeOwnerId(postDB)
+        return this.removeOwnerIdAndPassword(postDB)
     }
 
     public async getList(filters: any): Promise<Post[]> {
         const list = await super.getList({ ...filters, include })
-        return list.map(this.removeOwnerId)
+        return list.map(this.removeOwnerIdAndPassword)
     }
 
-    private removeOwnerId(post: Post) {
+    private removeOwnerIdAndPassword(post: Post) {
         const { ownerId, ...rest } = post.toJSON() as Post
-        return rest as Post
+        const { password, ...owner } = rest.owner
+        return { ...rest, owner } as Post
     }
 
     public async update(id: number, record: Post, transaction?: Transaction) {

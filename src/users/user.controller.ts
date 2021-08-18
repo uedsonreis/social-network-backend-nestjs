@@ -15,7 +15,7 @@ export class UserController {
     @UseGuards(AuthGuard('jwt'))
     @ApiOkResponse({ type: User, description: 'Logged user' })
     public async index(@Request() request: any) {
-        return await this.service.getByEmail(request.user.email)
+        return await this.service.get(request.user.id)
     }
 
     @PostMethod()
