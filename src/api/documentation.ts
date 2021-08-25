@@ -6,7 +6,7 @@ export function setupDocumentation(app: INestApplication): void {
     let baseURL = `http://locahost:${process.env.SERVICE_PORT}/`
 
     if (process.env.NODE_ENV === 'production') {
-        baseURL = 'https://social-network-backend-nestjs.herokuapp.com/';
+        baseURL = 'https://social-network-for-class.herokuapp.com/';
     }
 
     const options = new DocumentBuilder()
